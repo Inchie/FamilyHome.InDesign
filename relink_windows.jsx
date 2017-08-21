@@ -20,15 +20,20 @@ function checkLinks (myEvent) {
                 
                 var pathAsString = links[i].itemLink.filePath.toString().substring(20);      
                 var newPath = File(windowsBaseDir + pathAsString);                 
-             
+                
+                // the second path segment is sometimes production-1  
+                // If the newPath doesn't exists we try to replace the second path segment again 
                 if(newPath.exists){  
                     links[i].itemLink.relink(newPath);
-                }
+                } else {
+                    var pathAsString = links[i].itemLink.filePath.toString().substring(22);      
+                    var newPath = File(windowsBaseDir + pathAsString); 
+                    if(newPath.exists) {   
+                         links[i].itemLink.relink(newPath);
+                    }    
+                }    
             }
         }    
     }        
         
 }
-
-
-
